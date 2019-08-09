@@ -22,25 +22,7 @@ node {
         sh "./mvnw com.github.eirslett:frontend-maven-plugin:yarn"
     }
 
-    stage('backend tests') {
-        try {
-            sh "./mvnw test"
-        } catch(err) {
-            throw err
-        } finally {
-            junit '**/target/surefire-reports/TEST-*.xml'
-        }
-    }
 
-    stage('frontend tests') {
-        try {
-            sh "./mvnw com.github.eirslett:frontend-maven-plugin:yarn -Dfrontend.yarn.arguments=test"
-        } catch(err) {
-            throw err
-        } finally {
-            junit '**/target/test-results/karma/TESTS-*.xml'
-        }
-    }
 
     stage('packaging') {
         sh "./mvnw verify -Pprod -DskipTests"
